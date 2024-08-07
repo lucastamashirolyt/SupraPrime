@@ -5,5 +5,5 @@
   
   - Funcionalidade X: Descrição da funcionalidade principal do seu projeto
 
-#Configuração
+# Configuração
 Instruções sobre como configurar e executar o projeto localmente.
