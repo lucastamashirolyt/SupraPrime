@@ -1,6 +1,6 @@
 # SupraPrime Academia  
-  ###Autenticação:
+  -Autenticação:
   
-  ###Banco de Dados:
+  -Banco de Dados:
   
-  ###Funcionalidade X: Descrição da funcionalidade principal do seu projeto
+  -Funcionalidade X: Descrição da funcionalidade principal do seu projeto
