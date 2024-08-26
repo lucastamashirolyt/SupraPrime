@@ -10,5 +10,3 @@
 * Funcionalidades:
 -Design responsivo: MOBILE , TABLET , etc...
 -Cadastro de usuário e login
-
-link do design: 
