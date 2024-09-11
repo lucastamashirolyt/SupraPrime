@@ -1,3 +1,7 @@
+body {
+    background-image: url(../img/fundo_suplementos.jpg);
+}
+
 .login-container {
     max-width: 400px;
     margin: 0 auto;

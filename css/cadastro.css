@@ -13,20 +13,22 @@ body {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background-image: linear-gradient(to right, rgb(20, 147, 220), rgb(17, 54, 71));
+  background: url(../img/fundo_suplementos.jpg) repeat-y;
 }
 .container {
   position: relative;
   max-width: 700px;
   width: 100%;
-  background: #fff;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, .5);
+  backdrop-filter: blur(20px);
   padding: 25px;
   border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 .container header {
   font-size: 1.5rem;
-  color: #333;
+  color: #c6fc02;
   font-weight: 500;
   text-align: center;
   font-family: 'Times New Roman', Times, serif;
@@ -41,8 +43,13 @@ body {
   margin-top: 20px;
   border-bottom: 2px solid #ddd;
 }
+
+.form {
+  color: #77c4b8;
+} 
+
 .input-box label {
-  color: #333;
+  color: #fff;
   cursor: pointer;
 }
 .form :where(.input-box input, .select-box) {
@@ -51,12 +58,17 @@ body {
   width: 100%;
   outline: none;
   font-size: 1rem;
-  color: #707070;
+  color: #fff;
   margin-top: 8px;
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 0 15px;
 }
+
+.form ::placeholder {
+  color: #fff;
+}
+
 .input-box input:focus {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
 }
@@ -73,7 +85,7 @@ body {
   margin-top: 20px;
 }
 .gender-box h3 {
-  color: #333;
+  color: #fff;
   font-size: 1rem;
   font-weight: 400;
   margin-bottom: 8px;
@@ -94,7 +106,7 @@ body {
   cursor: pointer;
 }
 .gender label {
-  color: #707070;
+  color: #fcfc1a;
 }
 .address :where(input, .select-box) {
   margin-top: 15px;
@@ -104,7 +116,7 @@ body {
   width: 100%;
   outline: none;
   border: none;
-  color: #707070;
+  color: #fff;
   font-size: 1rem;
 }
 .form button {
@@ -138,7 +150,15 @@ body {
 
 a:link{
     text-decoration: none;
-    color: white;
+    color: #fff;
+}
+
+.form #regiao, #pais{
+  background: transparent;
+}
+
+.form input {
+  background: transparent;
 }
 
 
