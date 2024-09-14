@@ -13,7 +13,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: url(../img/fundo_suplementos.jpg) repeat-y;
+  background: url(./img/fundo_suplementos.jpg) repeat-y;
 }
 .container {
   position: relative;
