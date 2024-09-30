@@ -3,5 +3,5 @@
 - **Autenticação:** 
 - **Criação do Design:** 
 - **Criação do Formulario**
-- **Criação das páginas** Index -Cadastro -Login -Produtos -Sobre
-- **Design responsivo** MOBILE , TABLET 
+- **Criação das páginas**: Index -Cadastro -Login -Produtos -Sobre
+- **Design responsivo**: Mobile , Tablet 
