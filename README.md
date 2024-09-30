@@ -9,4 +9,9 @@
 - **Criação das páginas**: Index -Cadastro -Login -Produtos -Sobre
 - **Design responsivo**: Mobile , Tablet 
 
+# :hammer: Funcionalidades do projeto
 
+- `Funcionalidade Home`:Ir para Pagina principal com os principais produtos 
+- `Funcionalidade Cadastro`: Criar conta no site para poder efetuar uma compra
+- `Funcionalidade Login`: Preencher com os dados que foi feito o cadastro com "Nome de usuário" e "Senha"
+- `Funcionalidade Sobre`: Informações dos integrantes do grupo
