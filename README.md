@@ -10,5 +10,3 @@
 - **Design responsivo**: Mobile , Tablet 
 
 
-| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/114181346?v=4" width=115><br><sub>Lucas Yuji</sub>](https://github.com/lucastamashirolyt) |[<img loading="lazy" src="https://avatars.githubusercontent.com/u/30351153?v=4" width=115><br><sub>Gabriel Silveira</sub>](https://github.com/bielzin10mil) [<img loading="lazy" src="https://avatars.githubusercontent.com/u/8989346?v=4"(https://avatars.githubusercontent.com/u/142549465?v=4) width=115><br><sub>Gustavo Pascoal</sub>](https://github.com/gupascoal) |
-| :---: | :---: | :---: |
