@@ -1,4 +1,4 @@
-SupraPrime Academia
+<h1>SupraPrime Academia</h1>
 
 - **Autenticação:** 
 - **Criação do Design:** 
