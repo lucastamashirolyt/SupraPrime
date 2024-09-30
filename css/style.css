@@ -29,6 +29,7 @@ nav ul li{
 nav ul li a {
     font-size: 1.4em;
     cursor: pointer;
+    color: #000;
 
 }
 
@@ -267,6 +268,10 @@ small{
         display:block;
         cursor: pointer;
     }
+
+    .col-2 {
+        margin-top: 95px;
+    }
 }
 
 
@@ -291,6 +296,14 @@ small{
         display: none;
     }
     
+    ul#MenuItems .logincadastro {
+        padding: auto;
+    }
+
+    .col-2 {
+        margin-top: 95px;
+    }
+
 
 }
 
@@ -387,3 +400,4 @@ input:focus{
 nav li a:hover {
     background: #563434;
 }
+
