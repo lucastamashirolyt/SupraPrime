@@ -12,6 +12,7 @@
 # :hammer: Funcionalidades do projeto
 
 - `Funcionalidade Home`:Ir para Pagina principal com os principais produtos 
-- `Funcionalidade Cadastro`: Criar conta no site para poder efetuar uma compra
-- `Funcionalidade Login`: Preencher com os dados que foi feito o cadastro com "Nome de usuário" e "Senha"
+- `Funcionalidade Cadastro`: Criar conta de usuário para o site
+- `Funcionalidade Login`: Preencher com os dados que foi criado na tela de cadastro
 - `Funcionalidade Sobre`: Informações dos integrantes do grupo
+- `Funcionalidade Produtos `: Mostrar todos os produtos
