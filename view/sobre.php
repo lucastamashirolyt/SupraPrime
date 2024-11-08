@@ -12,15 +12,15 @@
     <div class="container">
         <div class="navbar">
             <div class="logo">
-                <a href="../index.html"><img src="../img/logo.png" alt="logo"></a>
+                <a href="../index.php"><img src="../img/logo.png" alt="logo"></a>
             </div>
            <nav>
                 <ul id="MenuItems">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../view/produtos.html">Produtos</a></li>
-                    <li><a class="sobre" href="sobre.html">Sobre</a></li>
-                    <li class="logincadastro"><a href="../view/login.html">Login</a></li>
-                    <li class="logincadastro"><a href="../view/cadastro.html">Cadastro</a></li>
+                    <li><a href="../index.php">Home</a></li>
+                    <li><a href="../view/produtos.php">Produtos</a></li>
+                    <li><a class="sobre" href="sobre.php">Sobre</a></li>
+                    <li class="logincadastro"><a href="../view/login.php">Login</a></li>
+                    <li class="logincadastro"><a href="../view/cadastro.php">Cadastro</a></li>
                 </ul>
             </nav>
             <img src="../img/menu.png" class="menu-icon" onClick="menutoggle()" alt="logoMenu">

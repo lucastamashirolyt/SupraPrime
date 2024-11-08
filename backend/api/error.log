@@ -1,0 +1,24 @@
+[08-Nov-2024 16:14:21 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'descricao' in 'field list' in C:\xampp\htdocs\SupraPrime\backend\api\updateProduct.php:46
+Stack trace:
+#0 C:\xampp\htdocs\SupraPrime\backend\api\updateProduct.php(46): mysqli->prepare('UPDATE produtos...')
+#1 {main}
+  thrown in C:\xampp\htdocs\SupraPrime\backend\api\updateProduct.php on line 46
+[08-Nov-2024 16:14:22 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'descricao' in 'field list' in C:\xampp\htdocs\SupraPrime\backend\api\updateProduct.php:46
+Stack trace:
+#0 C:\xampp\htdocs\SupraPrime\backend\api\updateProduct.php(46): mysqli->prepare('UPDATE produtos...')
+#1 {main}
+  thrown in C:\xampp\htdocs\SupraPrime\backend\api\updateProduct.php on line 46
+[08-Nov-2024 16:14:23 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
+[08-Nov-2024 16:14:27 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
+[08-Nov-2024 16:16:46 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
+[08-Nov-2024 16:16:47 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
+[08-Nov-2024 16:16:48 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
+[08-Nov-2024 16:16:48 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
+[08-Nov-2024 16:16:48 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
+[08-Nov-2024 16:18:17 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
+[08-Nov-2024 16:18:20 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
+[08-Nov-2024 16:18:20 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
+[08-Nov-2024 16:18:21 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
+[08-Nov-2024 16:20:19 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
+[08-Nov-2024 17:13:48 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
+[08-Nov-2024 17:13:49 Europe/Berlin] PHP Warning:  Undefined array key "descricao" in C:\xampp\htdocs\SupraPrime\backend\api\getProducts.php on line 33
