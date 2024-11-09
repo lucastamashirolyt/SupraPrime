@@ -29,9 +29,16 @@
                         <li><a href="dashboard.php"><img src="../img/profile.png" alt="Perfil" width="30"></a></li>
                         <li><a href="../PHP/logout.php">Sair</a></li>
                     <?php else: ?>
-                        <li><a href="cadastro.php">Cadastro</a></li>
-                        <li><a href="login.php">Login</a></li>
+                        <li class="logincadastro"><a href="cadastro.php">Cadastro</a></li>
+                        <li class="logincadastro"><a href="login.php">Login</a></li>
                     <?php endif; ?>
+                    <!-- Botão de Carrinho -->
+                    <li>
+                        <a href="#" onclick="toggleCart()">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span id="cart-count">0</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <div class="menu-icon" onclick="menutoggle()">
@@ -199,17 +206,28 @@
 
     </div>
 
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
 
-    <!-- footer -->
-    <div class="footer">
-        <div class="container">
-            <hr>
-            <p class="copyright">Copyright 2023 - SupraPrime</p>
+    <div id="cartSidebar" class="cart-sidebar">
+        <button class="close-btn" onclick="toggleCart()">&times;</button>
+        <h2>Carrinho</h2>
+        <div id="cartItems">
+            <!-- Itens do carrinho serão renderizados aqui -->
         </div>
+        <button onclick="checkout()">Finalizar Compra</button>
     </div>
 
+    <script type="text/javascript">
+        var isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>;
+        console.log("isLoggedIn:", isLoggedIn);
+    </script>
+        });
 
     <script src="../JS/script.js"></script>
+</body>
+
+</html>
+    </script>
 </body>
 
 </html>

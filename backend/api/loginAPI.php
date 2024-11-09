@@ -38,7 +38,7 @@ $user = $result->fetch_assoc();
 if (password_verify($senha, $user['senha'])) {
     // Autenticação bem-sucedida
     session_regenerate_id(true); // Regenera o ID da sessão para segurança
-    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['user_id'] = $user['id']; // Ensure this line sets the session
     $_SESSION['user_name'] = $user['nome'];
     $_SESSION['isLoggedIn'] = true; // Adicionado para definir o estado de login
     $_SESSION['user_role'] = $user['role']; // Adicionado para definir o papel do usuário

@@ -22,11 +22,9 @@
 <body>
     <?php
     session_start();
-    // Temporariamente definir uma sessão para teste
-    // $_SESSION['user_id'] = 1; // Descomente esta linha para testar
     ?>
     <script type="text/javascript">
-        var isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>
+        var isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>;
         console.log("isLoggedIn:", isLoggedIn);
     </script>
     <div class="header">
@@ -45,7 +43,7 @@
                         </a>
                     </li>
                     <li id="logoutLink" style="display: none;">
-                        <a href="PHP/logout.php">Sair</a>
+                        <a href="backend/api/logout.php">Sair</a>
                     </li>
                     <li id="cadastroLink" class="logincadastro"><a href="view/cadastro.php">Cadastro</a></li>
                     <li id="loginLink" class="logincadastro"><a href="view/login.php">Login</a></li>
@@ -80,13 +78,14 @@
 
         <div class="row">
             <div class="col-2">
-                <h1>Quer deixar de ser um frango?<br>venha para SupraPrime</h1>
+                <h1>Quer deixar de ser um frango?<br>venha para <div style="color: #ff523b;">SupraPrime</div></h1>
                 <p>Venha e conheça a melhor loja de Suplementos de Campinas e região</p>
                 <a href="./view/produtos.php" class="btn">Compre Agora &#8594;</a>
             </div>
 
-            <div class="col-2">
-                <img src="img/CREATINA-BARRINHA_DESKTOP.png" alt="kit-suplementos" width="1320px">
+            <!-- Hide this div below 768px -->
+            <div class="col-7">
+                <img src="img/banner_principal.png" alt="kit-suplementos">
             </div>
         </div>
     </div>
@@ -431,7 +430,16 @@
 
     <!-- Script -->
     <script src="JS/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            verificarAutenticacao(); // Chama a função correta para atualizar os botões do menu
+        });
+    </script>
     <!-- Script -->
+
+</body>
+
+</html>
 
 </body>
 

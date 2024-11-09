@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Função para adicionar produto ao carrinho
 function adicionarAoCarrinho(id) {
-    fetch(`../backend/api/getProductsById.php?id=${id}`)
+    fetch(`/backend/api/getProductsById.php?id=${id}`) // Updated path
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -81,35 +81,24 @@ function atualizarCarrinho() {
     if (cartItems) {
         cartItems.innerHTML = '';
         cart.forEach(produto => {
-            const div = document.createElement('div');
-            div.classList.add('cart-item', 'd-flex', 'align-items-center', 'mb-2');
-
-            const img = document.createElement('img');
-            img.src = produto.imagem;
-            img.alt = produto.nome;
-            img.width = 50;
-            img.classList.add('mr-2');
-            div.appendChild(img);
-
-            const span = document.createElement('span');
-            span.textContent = produto.nome;
-            span.classList.add('mr-auto');
-            div.appendChild(span);
-
-            const preco = document.createElement('span');
-            preco.textContent = `R$ ${produto.preco.toFixed(2)}`;
-            preco.classList.add('mr-2');
-            div.appendChild(preco);
-
-            const btnRemover = document.createElement('button');
-            btnRemover.textContent = 'Remover';
-            btnRemover.classList.add('btn', 'btn-danger', 'btn-sm');
-            btnRemover.onclick = () => removerDoCarrinho(produto.id);
-            div.appendChild(btnRemover);
-
-            cartItems.appendChild(div);
+            const item = document.createElement('div');
+            item.className = 'cart-item';
+            item.innerHTML = `
+                <img src="${produto.imagem}" alt="${produto.nome}" width="50">
+                <span>${produto.nome}</span>
+                <span>R$${produto.preco}</span>
+                <button onclick="removerDoCarrinho(${produto.id})">Remover</button>
+            `;
+            cartItems.appendChild(item);
         });
     }
+
+    // Atualizar o contador de itens no carrinho
+    const cartCount = document.getElementById('cart-count');
+    if (cartCount) {
+        cartCount.textContent = cart.length;
+    }
+
     // Salva o carrinho no localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
 }
@@ -119,19 +108,6 @@ function removerDoCarrinho(id) {
     cart = cart.filter(produto => produto.id !== id);
     atualizarCarrinho();
     mostrarAlerta('Produto removido do carrinho.', 'success');
-}
-
-// Função para finalizar compra
-function checkout() {
-    if (cart.length === 0) {
-        mostrarAlerta('Seu carrinho está vazio.', 'warning');
-        return;
-    }
-    // Implementar a lógica de finalização de compra (ex: redirecionar para pagamento)
-    mostrarAlerta('Compra finalizada com sucesso!', 'success');
-    cart = [];
-    atualizarCarrinho();
-    toggleCart();
 }
 
 // Função para alternar o carrinho Sidebar
@@ -147,6 +123,18 @@ function toggleCart() {
             overlay.style.display = "none";
         }
     }
+}
+
+// Função para finalizar compra
+function checkout() {
+    if (cart.length === 0) {
+        mostrarAlerta('Seu carrinho está vazio.', 'warning');
+        return;
+    }
+    alert('Compra finalizada!');
+    cart = [];
+    atualizarCarrinho();
+    toggleCart();
 }
 
 // LOGIN
@@ -341,25 +329,39 @@ function abrirModalEdicao(produto) {
     $('#updateModal').modal('show');
 }
 
-// Função para alternar a visibilidade dos links de login/cadastro e perfil/logout (Index)
+// Função para alternar a visibilidade dos links de login/cadastro e perfil/logout
 function verificarAutenticacao() {
     const profileLink = document.getElementById('profileLink');
     const logoutLink = document.getElementById('logoutLink');
     const loginLink = document.getElementById('loginLink');
     const cadastroLink = document.getElementById('cadastroLink');
 
-    const isLoggedInStatus = verificarSessao();
-
-    if (isLoggedInStatus) {
-        profileLink.style.display = 'block';
-        logoutLink.style.display = 'block';
-        loginLink.style.display = 'none';
-        cadastroLink.style.display = 'none';
+    if (isLoggedIn) {
+        if (profileLink) {
+            profileLink.style.display = 'block';
+        }
+        if (logoutLink) {
+            logoutLink.style.display = 'block';
+        }
+        if (cadastroLink) {
+            cadastroLink.style.display = 'none';
+        }
+        if (loginLink) {
+            loginLink.style.display = 'none';
+        }
     } else {
-        profileLink.style.display = 'none';
-        logoutLink.style.display = 'none';
-        loginLink.style.display = 'block';
-        cadastroLink.style.display = 'block';
+        if (profileLink) {
+            profileLink.style.display = 'none';
+        }
+        if (logoutLink) {
+            logoutLink.style.display = 'none';
+        }
+        if (cadastroLink) {
+            cadastroLink.style.display = 'block';
+        }
+        if (loginLink) {
+            loginLink.style.display = 'block';
+        }
     }
 }
 
@@ -474,4 +476,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (errorMessage) {
         errorMessage.style.display = 'none';
     }
+    
+    verificarAutenticacao(); // Chama a função correta para atualizar os botões do menu
 });

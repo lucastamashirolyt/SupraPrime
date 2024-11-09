@@ -5,30 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre</title>
     <link rel="shortcut icon" href="../img/logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/sobre.css">
 </head>
 <body>
-    
-    <div class="container">
+    <div class="header">
         <div class="navbar">
             <div class="logo">
-                <a href="../index.php"><img src="../img/logo.png" alt="logo"></a>
+                <a href="../index.php"><img src="../img/logo.png" alt="logo" width="70"></a>
             </div>
-           <nav>
+            <nav>
                 <ul id="MenuItems">
                     <li><a href="../index.php">Home</a></li>
-                    <li><a href="../view/produtos.php">Produtos</a></li>
-                    <li><a class="sobre" href="sobre.php">Sobre</a></li>
-                    <li class="logincadastro"><a href="../view/login.php">Login</a></li>
-                    <li class="logincadastro"><a href="../view/cadastro.php">Cadastro</a></li>
+                    <li><a href="produtos.php">Produtos</a></li>
+                    <li><a href="sobre.php">Sobre</a></li>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <li><a href="dashboard.php"><img src="../img/profile.png" alt="Perfil" width="30"></a></li>
+                        <li><a href="../backend/api/logout.php">Sair</a></li>
+                    <?php else: ?>
+                        <li class="logincadastro"><a href="cadastro.php">Cadastro</a></li>
+                        <li class="logincadastro"><a href="login.php">Login</a></li>
+                    <?php endif; ?>
+                    <!-- Botão de Carrinho -->
+                    <li>
+                        <a href="#" onclick="toggleCart()">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span id="cart-count">0</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
-            <img src="../img/menu.png" class="menu-icon" onClick="menutoggle()" alt="logoMenu">
+            <div class="menu-icon" onclick="menutoggle()">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
         </div>
-    </div>     
-
-
-    
+    </div>
 
 <div class="wrapper">
     <h1>Integrantes do grupo</h1>

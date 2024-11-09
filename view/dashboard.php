@@ -3,7 +3,7 @@ session_start();
 
 // Verificar se o usuário está logado
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.html'); // Redireciona para a página de login se não estiver logado
+    header('Location: login.php'); // Redireciona para a página de login se não estiver logado
     exit();
 }
 
@@ -25,7 +25,7 @@ $isAdmin = $_SESSION['user_role'] === 'admin';
             <a href="admin.php">Gerenciar Produtos</a>
             <a href="user_management.php">Gerenciar Usuários</a>
         <?php endif; ?>
-        <a href="../PHP/logout.php">Sair</a>
+        <a href="../backend/api/logout.php">Sair</a>
     </div>
 </body>
 </html>

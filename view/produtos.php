@@ -1,9 +1,13 @@
+<?php session_start(); ?>
+<script type="text/javascript">
+    var isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>;
+</script>
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produtos</title>
     <link rel="shortcut icon" href="../img/logo.ico" type="image/x-icon">
     <link rel="stylesheet" href="../css/style.css">
@@ -15,7 +19,6 @@
 </head>
 
 <body>
-    <?php session_start(); ?>
     <div class="header">
         <div class="navbar">
             <div class="logo">
@@ -28,11 +31,18 @@
                     <li><a href="sobre.php">Sobre</a></li>
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <li><a href="dashboard.php"><img src="../img/profile.png" alt="Perfil" width="30"></a></li>
-                        <li><a href="../PHP/logout.php">Sair</a></li>
+                        <li><a href="../backend/api/logout.php">Sair</a></li>
                     <?php else: ?>
-                        <li><a href="cadastro.php">Cadastro</a></li>
-                        <li><a href="login.php">Login</a></li>
+                        <li class="logincadastro"><a href="cadastro.php">Cadastro</a></li>
+                        <li class="logincadastro"><a href="login.php">Login</a></li>
                     <?php endif; ?>
+                    <!-- Botão de Carrinho -->
+                    <li>
+                        <a href="#" onclick="toggleCart()">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span id="cart-count">0</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <div class="menu-icon" onclick="menutoggle()">
@@ -187,6 +197,17 @@
 
     </div>
 
+    <!-- Carrinho Sidebar e Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+
+    <div id="cartSidebar" class="cart-sidebar">
+        <button class="close-btn" onclick="toggleCart()">&times;</button>
+        <h2>Carrinho</h2>
+        <div id="cartItems">
+            <!-- Itens do carrinho serão renderizados aqui -->
+        </div>
+        <button onclick="checkout()">Finalizar Compra</button>
+    </div>
 
     <!-- footer -->
     <div class="footer">
@@ -196,8 +217,12 @@
         </div>
     </div>
 
-
-    <script src="/JS/script.js"></script>
+    <script src="../JS/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            verificarAutenticacao(); // Chama a função para atualizar os botões do menu
+        });
+    </script>
 
     <!-- 
         <script>

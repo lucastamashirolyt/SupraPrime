@@ -39,6 +39,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
                 <!-- Produtos serão inseridos aqui -->
             </tbody>
         </table>
+        <a href="../backend/api/logout.php">Sair</a>
     </div>
 
     <!-- Alert Container -->

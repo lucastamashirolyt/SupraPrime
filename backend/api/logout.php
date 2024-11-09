@@ -8,6 +8,6 @@ $_SESSION = array();
 session_destroy();
 
 // Redirecionar para a página de login
-header('Location: ../view/login.html');
+header('Location: ../../view/login.php');
 exit();
 ?>
