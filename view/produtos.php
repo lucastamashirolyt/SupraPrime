@@ -1,9 +1,11 @@
-<?php session_start(); ?>
-<script type="text/javascript">
-    var isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>;
-</script>
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
+<script type="text/javascript">
+    var isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>;
+</script> <!-- Fechar a tag <script> corretamente -->
 
 <head>
     <meta charset="utf-8">
@@ -15,7 +17,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
 </head>
 
 <body>
@@ -45,7 +46,7 @@
                     </li>
                 </ul>
             </nav>
-            <div class="menu-icon" onclick="menutoggle()">
+            <div class="menu-icon">
                 <div class="bar1"></div>
                 <div class="bar2"></div>
                 <div class="bar3"></div>
@@ -58,135 +59,8 @@
             <h2>Todos os Produtos</h2>
         </div>
 
-        <!--Primeira fileira-->
-        <div class="row">
-            <div class="col-4">
-                <img src="../img/Max-TitaniumBaunilha.png" alt="logo"><a></a>
-                <h4>Kit : Mass Titanium 3Kg + Creatina 100G + Bcaa 60 Caps - Max TitaniumBaunilha</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$50.00</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-            <div class="col-4">
-                <img src="../img/creatina1.png" alt="creatina1"><a></a>
-                <h4>Creatina - Universal (200g) </h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>R$35.00</p>
-                <button class="btn add-to-cart" data-product-id="2">Adicionar ao Carrinho</button>
-            </div>
-
-            <div class="col-4">
-                <img src="../img/CREATINA.png" alt="creatina"><a></a>
-                <h4>Creatina Pura Probiotica 100g</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$15.00</p>
-                <button class="btn add-to-cart" data-product-id="3">Adicionar ao Carrinho</button>
-            </div>
-        </div>
-
-        <!--Segunda fileira-->
-        <div class="row">
-            <div class="col-4">
-                <img src="../img/wheyp.png" alt="whey"><a></a>
-                <h4>Whey Protein Gold Standard 100% 907g</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$50.00</p>
-                <button class="btn add-to-cart" data-product-id="4">Adicionar ao Carrinho</button>
-            </div>
-            <div class="col-4">
-                <img src="../img/protein.jpg" alt="protein"><a></a>
-                <h4>Nutri Whey Protein</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>R$50.00</p>
-                <button class="btn add-to-cart" data-product-id="5">Adicionar ao Carrinho</button>
-            </div>
-            <div class="col-4">
-                <img src="../img/isolate.png" alt="isolete"><a></a>
-                <h4>Isolate Protein Mix 1,8kg</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$50.00</p>
-                <button class="btn add-to-cart" data-product-id="6">Adicionar ao Carrinho</button>
-            </div>
-        </div>
-
-        <!--Terceira fileira-->
-        <div class="row">
-            <div class="col-4">
-                <img src="../img/whey1.png" alt="whey1"><a></a>
-                <h4>WHEY PROTEIN ISO PROTEIN BLEND 2kg</h4>
-                <div class="rating">
-
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$80.00</p>
-                <button class="btn add-to-cart" data-product-id="7">Adicionar ao Carrinho</button>
-            </div>
-            <div class="col-4">
-                <img src="../img/11.jpg" alt="img11"><a></a>
-                <h4>Pré Treino Prohibido Hardcore Pre-Workout, 3VS Nutrition </h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>R$80.00</p>
-                <button class="btn add-to-cart" data-product-id="8">Adicionar ao Carrinho</button>
-            </div>
-            <div class="col-4">
-                <img src="../img/pre-treino.png" alt="pre_treino"><a></a>
-                <h4>Pré-treino Diabo Verde</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$80.00</p>
-                <button class="btn add-to-cart" data-product-id="9">Adicionar ao Carrinho</button>
-            </div>
+        <div class="row" id="product-list">
+            <!-- Produtos serão renderizados aqui -->
         </div>
 
         <div class="page-btn">
@@ -194,7 +68,6 @@
             <span><a href="produtos2.php">2</a></span>
             <span>&#8594;</span>
         </div>
-
     </div>
 
     <!-- Carrinho Sidebar e Overlay -->
@@ -213,92 +86,57 @@
     <div class="footer">
         <div class="container">
             <hr>
-            <p class="copyright">Copyright 2023 - SupraPrime</p>
+            <p class="copyright">Copyright 2024 - SupraPrime</p>
         </div>
     </div>
 
     <script src="../JS/script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            verificarAutenticacao(); // Chama a função para atualizar os botões do menu
+        document.addEventListener('DOMContentLoaded', function () {
+            verificarAutenticacao(); // Atualiza os botões do menu
+            atualizarCarrinho(); // Atualiza o carrinho ao carregar a página
+
+            // Buscar e renderizar produtos
+            fetch('../backend/api/getAllProducts.php?start_id=7&end_id=15')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const productList = document.getElementById('product-list');
+                        data.produtos.forEach(produto => {
+                            const productDiv = document.createElement('div');
+                            productDiv.className = 'col-4';
+                            productDiv.innerHTML = `
+                                <img src="../${produto.imagem}" alt="${produto.nome}">
+                                <h4>${produto.nome}</h4>
+                                <div class="rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                                <p>${produto.preco > 0 ? `R$${produto.preco}` : 'Indisponível'}</p>
+                                ${produto.id > 0 ? `<button class="btn add-to-cart" data-product-id="${produto.id}">Adicionar ao Carrinho</button>` : ''}
+                            `;
+                            productList.appendChild(productDiv);
+                        });
+
+                        // Adicionar event listeners aos botões de adicionar ao carrinho
+                        document.querySelectorAll('.add-to-cart').forEach(button => {
+                            button.addEventListener('click', function () {
+                                const productId = this.getAttribute('data-product-id');
+                                adicionarAoCarrinho(productId);
+                            });
+                        });
+                    } else {
+                        console.error('Erro ao carregar produtos:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar produtos:', error);
+                });
         });
     </script>
-
-    <!-- 
-        <script>
-        var menuItems = document.getElementById("MenuItems");
-        MenuItems.style.maxHeight = "0px";
-        function menutoggle() {
-            if (MenuItems.style.maxHeight == "0px") {
-                MenuItems.style.maxHeight = "200px";
-            }
-            else {
-                MenuItems.style.maxHeight = "0px";
-            }
-        }
-
-        function toggleCart() {
-            var cartSidebar = document.getElementById("cartSidebar");
-            var overlay = document.getElementById("overlay");
-            if (cartSidebar.style.right === "-300px" || cartSidebar.style.right === "") {
-                cartSidebar.style.right = "0px";
-                overlay.style.display = "block";
-            } else {
-                cartSidebar.style.right = "-300px";
-                overlay.style.display = "none";
-            }
-        }
-
-        var cart = [];
-
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function () {
-                var productId = this.getAttribute('data-product-id');
-                addToCart(productId);
-                toggleCart(); // Adiciona esta linha para fechar a tela lateral
-            });
-        });
-
-        function addToCart(productId) {
-            var product = {
-                id: productId,
-                name: "Produto " + productId,
-                price: Math.floor(Math.random() * 100) + 1,
-                quantity: 1
-            };
-
-            var existingProduct = cart.find(p => p.id === productId);
-            if (existingProduct) {
-                existingProduct.quantity++;
-            } else {
-                cart.push(product);
-            }
-
-            renderCart();
-        }
-
-        function renderCart() {
-            var cartItems = document.getElementById('cartItems');
-            cartItems.innerphp = '';
-            cart.forEach(product => {
-                var item = document.createElement('div');
-                item.className = 'cart-item';
-                item.innerphp = `
-                    <span>${product.name}</span>
-                    <span>${product.quantity} x R$${product.price}</span>
-                `;
-                cartItems.appendChild(item);
-            });
-        }
-
-        function checkout() {
-            alert('Compra finalizada!');
-            cart = [];
-            renderCart();
-            toggleCart();
-        }
-    </script>
-    -->
 </body>
 
 </html>

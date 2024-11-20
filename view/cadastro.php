@@ -29,7 +29,7 @@
             </div>
             <div class="input-box">
                 <label for="confirm_senha">Confirmação de Senha</label>
-                <input type="password" id="confirm_senha" placeholder="Digite a sua senha" required />
+                <input type="password" id="confirm_senha" name="confirm_senha" placeholder="Digite a sua senha" required />
             </div>
             <div class="column">
                 <div class="input-box">

@@ -4,15 +4,38 @@
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 // Função para exibir alertas
-function mostrarAlerta(mensagem, tipo) {
-    const alerta = obterAlerta();
-    alerta.className = `alert alert-${tipo}`;
-    alerta.textContent = mensagem;
-    alerta.classList.remove('d-none');
+function mostrarAlerta(mensagem, tipo, formId = null) {
+    const errorMessage = document.getElementById('error-message');
+    if (errorMessage) {
+        errorMessage.textContent = mensagem;
+        errorMessage.style.color = tipo === 'danger' || tipo === 'warning' ? 'red' : 'green';
+        errorMessage.style.display = 'block';
+    } else {
+        const alerta = obterAlerta();
+        alerta.className = `alert alert-${tipo}`;
+        alerta.textContent = mensagem;
+        alerta.classList.remove('d-none');
+        alerta.style.color = tipo === 'danger' || tipo === 'warning' ? 'red' : 'green';
+        alerta.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+        alerta.style.border = tipo === 'danger' || tipo === 'warning' ? '1px solid red' : '1px solid green';
+        alerta.style.padding = '10px';
+        alerta.style.marginTop = '10px';
+        alerta.style.borderRadius = '5px';
+        alerta.style.textAlign = 'center';
 
-    setTimeout(() => {
-        alerta.classList.add('d-none');
-    }, 3000);
+        if (formId) {
+            const form = document.getElementById(formId);
+            if (form) {
+                form.appendChild(alerta);
+            }
+        } else {
+            document.body.appendChild(alerta);
+        }
+
+        setTimeout(() => {
+            alerta.classList.add('d-none');
+        }, 3000);
+    }
 }
 
 function obterAlerta() {
@@ -25,6 +48,45 @@ function obterAlerta() {
         document.body.appendChild(alerta);
     }
     return alerta;
+}
+
+// Função para alternar a visibilidade dos links de login/cadastro e perfil/logout
+function verificarAutenticacao() {
+    if (!isLoggedIn()) {
+        // Handle the case when the user is not logged in
+    }
+    const profileLink = document.getElementById('profileLink');
+    const logoutLink = document.getElementById('logoutLink');
+    const loginLink = document.getElementById('loginLink');
+    const cadastroLink = document.getElementById('cadastroLink');
+
+    if (isLoggedIn) { // Use a variável global isLoggedIn
+        if (profileLink) {
+            profileLink.style.display = 'block';
+        }
+        if (logoutLink) {
+            logoutLink.style.display = 'block';
+        }
+        if (cadastroLink) {
+            cadastroLink.style.display = 'none';
+        }
+        if (loginLink) {
+            loginLink.style.display = 'none';
+        }
+    } else {
+        if (profileLink) {
+            profileLink.style.display = 'none';
+        }
+        if (logoutLink) {
+            logoutLink.style.display = 'none';
+        }
+        if (cadastroLink) {
+            cadastroLink.style.display = 'block';
+        }
+        if (loginLink) {
+            loginLink.style.display = 'block';
+        }
+    }
 }
 
 // Função para alternar o menu
@@ -48,25 +110,40 @@ document.addEventListener('DOMContentLoaded', function () {
     if (menuItems) {
         menuItems.style.maxHeight = '0px';
     }
+    const menuIcon = document.querySelector('.menu-icon');
+    if (menuIcon) {
+        menuIcon.addEventListener('click', menutoggle);
+    }
+    verificarAutenticacao(); // Chama a função correta para atualizar os botões do menu
 });
 
 // Função para adicionar produto ao carrinho
 function adicionarAoCarrinho(id) {
-    fetch(`/backend/api/getProductsById.php?id=${id}`) // Updated path
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                const produto = data.produto;
-                const existe = cart.find(item => item.id === produto.id);
-                if (existe) {
-                    mostrarAlerta('Produto já está no carrinho.', 'warning');
+    // Verificar se estamos na página index.php ou em uma subpágina
+    const pathPrefix = window.location.pathname.includes('/view/') ? '../' : '';
+    fetch(`${pathPrefix}backend/api/getProductsById.php?id=${id}`) // Corrigir o caminho
+        .then(response => response.text())
+        .then(text => {
+            try {
+                const data = JSON.parse(text);
+                if (data.success) {
+                    const produto = data.produto;
+                    const existe = cart.find(item => item.id === produto.id);
+                    if (existe) {
+                        mostrarAlerta('Produto já está no carrinho.', 'warning');
+                    } else {
+                        // Corrigir o caminho da imagem
+                        produto.imagem = `${pathPrefix}${produto.imagem}`;
+                        cart.push(produto);
+                        mostrarAlerta('Produto adicionado ao carrinho!', 'success');
+                        atualizarCarrinho();
+                    }
                 } else {
-                    cart.push(produto);
-                    mostrarAlerta('Produto adicionado ao carrinho!', 'success');
-                    atualizarCarrinho();
+                    mostrarAlerta(data.message || 'Erro ao adicionar produto ao carrinho.', 'danger');
                 }
-            } else {
-                mostrarAlerta(data.message || 'Erro ao adicionar produto ao carrinho.', 'danger');
+            } catch (error) {
+                console.error('Erro:', error);
+                mostrarAlerta('Erro ao adicionar produto ao carrinho.', 'danger');
             }
         })
         .catch(error => {
@@ -87,7 +164,7 @@ function atualizarCarrinho() {
                 <img src="${produto.imagem}" alt="${produto.nome}" width="50">
                 <span>${produto.nome}</span>
                 <span>R$${produto.preco}</span>
-                <button onclick="removerDoCarrinho(${produto.id})">Remover</button>
+                <button class="btn-remove" onclick="removerDoCarrinho(${produto.id})">&times;</button>
             `;
             cartItems.appendChild(item);
         });
@@ -131,10 +208,30 @@ function checkout() {
         mostrarAlerta('Seu carrinho está vazio.', 'warning');
         return;
     }
-    alert('Compra finalizada!');
-    cart = [];
-    atualizarCarrinho();
-    toggleCart();
+
+    // Registrar a compra no backend
+    fetch('backend/api/registerPurchase.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ cart })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            mostrarAlerta('Compra finalizada!', 'success');
+            cart = [];
+            atualizarCarrinho();
+            toggleCart();
+        } else {
+            mostrarAlerta(data.message || 'Erro ao finalizar compra.', 'danger');
+        }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        mostrarAlerta('Erro ao finalizar compra.', 'danger');
+    });
 }
 
 // LOGIN
@@ -158,8 +255,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (data.success) {
                         mostrarAlerta('Login realizado com sucesso!', 'success');
                         setTimeout(() => {
-                            window.location.href = data.role === 'admin' ? 'dashboard.php' : '../index.php';
-                        }, 2000); // Redireciona após 2 segundos
+                            window.location.href = '../view/dashboard.php'; // Redireciona após 2 segundos
+                        }, 2000);
                     } else {
                         mostrarAlerta(data.message, 'danger');
                     }
@@ -194,17 +291,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        mostrarAlerta('Usuário cadastrado com sucesso!', 'success');
+                        mostrarAlerta('Usuário cadastrado com sucesso!', 'success', 'registerForm');
                         setTimeout(() => {
-                            window.location.href = 'login.php'; // Redirecionar para a página de login
-                        }, 2000); // Redireciona após 2 segundos
+                            window.location.href = '../view/login.php'; // Redireciona após 2 segundos
+                        }, 2000);
                     } else {
-                        mostrarAlerta(data.message, 'danger');
+                        mostrarAlerta(data.message, 'danger', 'registerForm');
                     }
                 })
                 .catch(error => {
                     console.error('Erro:', error);
-                    mostrarAlerta('Erro ao tentar registrar.', 'danger');
+                    mostrarAlerta('Erro ao tentar registrar.', 'danger', 'registerForm');
                 });
         });
     }
@@ -329,42 +426,6 @@ function abrirModalEdicao(produto) {
     $('#updateModal').modal('show');
 }
 
-// Função para alternar a visibilidade dos links de login/cadastro e perfil/logout
-function verificarAutenticacao() {
-    const profileLink = document.getElementById('profileLink');
-    const logoutLink = document.getElementById('logoutLink');
-    const loginLink = document.getElementById('loginLink');
-    const cadastroLink = document.getElementById('cadastroLink');
-
-    if (isLoggedIn) {
-        if (profileLink) {
-            profileLink.style.display = 'block';
-        }
-        if (logoutLink) {
-            logoutLink.style.display = 'block';
-        }
-        if (cadastroLink) {
-            cadastroLink.style.display = 'none';
-        }
-        if (loginLink) {
-            loginLink.style.display = 'none';
-        }
-    } else {
-        if (profileLink) {
-            profileLink.style.display = 'none';
-        }
-        if (logoutLink) {
-            logoutLink.style.display = 'none';
-        }
-        if (cadastroLink) {
-            cadastroLink.style.display = 'block';
-        }
-        if (loginLink) {
-            loginLink.style.display = 'block';
-        }
-    }
-}
-
 // FUNCTION TO HANDLE CREATE PRODUCT (ADMIN)
 function criarProduto(dados) {
     fetch('../backend/api/createProduct.php', {
@@ -432,12 +493,55 @@ if (updateForm) {
     });
 }
 
+// Manipulador de submissão do formulário de Edição de Usuário
+const editUserForm = document.getElementById('editUserForm');
+if (editUserForm) {
+    editUserForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const id = document.getElementById('editUserId').value;
+        const name = document.getElementById('editUserName').value.trim();
+        const email = document.getElementById('editUserEmail').value.trim();
+        const role = document.getElementById('editUserRole').value;
+
+        if (!name || !email || !role) {
+            mostrarAlerta('Por favor, preencha todos os campos.', 'danger');
+            return;
+        }
+
+        const dados = { id, nome: name, email, role };
+
+        fetch('../backend/api/editUser.php', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    mostrarAlerta(data.message, 'success');
+                    editUserForm.reset();
+                    document.getElementById('editUserModal').style.display = 'none';
+                    location.reload();
+                } else {
+                    mostrarAlerta(data.message, 'danger');
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                mostrarAlerta('Erro ao editar usuário.', 'danger');
+            });
+    });
+}
+
 // Event Listener para checkbox "Selecionar Todos" (Admin)
 const selectAllCheckbox = document.getElementById('selectAll');
 if (selectAllCheckbox) {
     selectAllCheckbox.addEventListener('change', function () {
         const checkboxes = document.querySelectorAll('.product-checkbox');
         checkboxes.forEach(cb => cb.checked = this.checked);
+// Função para editar usuário
         toggleDeleteButton();
     });
 }
@@ -478,4 +582,60 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     verificarAutenticacao(); // Chama a função correta para atualizar os botões do menu
+});
+
+function editarUsuario(id) {
+    // Obter os dados atuais do usuário
+    fetch(`../backend/api/getUserById.php?id=${id}`) // Corrected path
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const user = data.user;
+                // Preencher um formulário de edição (implemente o modal/form conforme necessário)
+                // Exemplo:
+                document.getElementById('editUserId').value = user.id;
+                document.getElementById('editUserName').value = user.nome; // Corrected column name to 'nome'
+                document.getElementById('editUserEmail').value = user.email;
+                document.getElementById('editUserRole').value = user.role;
+                // Mostrar o modal de edição
+                document.getElementById('editUserModal').style.display = 'block';
+            } else {
+                mostrarAlerta(data.message, 'danger');
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            mostrarAlerta('Erro ao buscar dados do usuário.', 'danger');
+        });
+}
+
+// Função para excluir usuário
+function excluirUsuario(id) {
+    if (confirm('Tem certeza que deseja excluir este usuário?')) {
+        fetch(`../backend/api/delete_user.php?id=${id}`, {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                mostrarAlerta(data.message, 'success');
+                location.reload();
+            } else {
+                mostrarAlerta(data.message, 'danger');
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            mostrarAlerta('Erro ao excluir usuário.', 'danger');
+        });
+    }
+}
+
+function isLoggedIn() {
+    // Implement the logic to check if the user is logged in
+    return true; // Example return value
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    verificarAutenticacao();
 });

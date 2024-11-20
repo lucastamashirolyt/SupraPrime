@@ -80,9 +80,17 @@ ob_end_clean();
     <link rel="stylesheet" href="../css/style.css">
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
+        <a href="productManagement.php" class="btn btn-info top-right">Voltar</a>
         <h2 class="mb-4">Editar Produto</h2>
 
         <!-- Área de Alertas -->
@@ -104,6 +112,7 @@ ob_end_clean();
             </div>
             <button type="submit" class="btn btn-primary">Atualizar Produto</button>
             <a href="admin.php" class="btn btn-secondary">Cancelar</a>
+            <a href="logout.php" class="btn btn-danger">Sair</a>
         </form>
     </div>
 

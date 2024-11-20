@@ -12,9 +12,33 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - SupraPrime</title>
     <link rel="stylesheet" href="../css/admin.css">
+    <style>
+        .top-right {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .top-right a {
+            padding: 10px 20px;
+            background-color: #ff523b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        .top-right a:hover {
+            background-color: #e04e30;
+        }
+    </style>
 </head>
 <body>
     <div class="admin-container">
+        <div class="top-right">
+            <a href="../view/dashboard.php" class="btn btn-info">Voltar</a>
+            <a href="../backend/api/logout.php" class="btn btn-danger">Sair</a>
+        </div>
         <h1>Gerenciar Produtos</h1>
         <form id="formProduto">
             <input type="hidden" id="produtoId">
@@ -39,7 +63,6 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
                 <!-- Produtos serão inseridos aqui -->
             </tbody>
         </table>
-        <a href="../backend/api/logout.php">Sair</a>
     </div>
 
     <!-- Alert Container -->
@@ -147,7 +170,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
                                 <td>${produto.id}</td>
                                 <td>${produto.nome}</td>
                                 <td>R$${preco.toFixed(2)}</td>
-                                <td><img src="${produto.imagem}" alt="${produto.nome}" width="50"></td>
+                                <td><img src="../${produto.imagem}" alt="${produto.nome}" width="50"></td>
                                 <td>
                                     <button onclick="editarProduto(${produto.id}, '${produto.nome}', ${preco}, '${produto.imagem}')">Editar</button>
                                     <button onclick="removerProduto(${produto.id})">Remover</button>

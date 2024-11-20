@@ -1,5 +1,11 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
+<script type="text/javascript">
+    var isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>;
+</script> <!-- Fechar a tag <script> corretamente -->
 
 <head>
     <meta charset="utf-8">
@@ -14,7 +20,6 @@
 </head>
 
 <body>
-    <?php session_start(); ?>
     <div class="header">
         <div class="navbar">
             <div class="logo">
@@ -27,7 +32,7 @@
                     <li><a href="sobre.php">Sobre</a></li>
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <li><a href="dashboard.php"><img src="../img/profile.png" alt="Perfil" width="30"></a></li>
-                        <li><a href="../PHP/logout.php">Sair</a></li>
+                        <li><a href="../backend/api/logout.php">Sair</a></li>
                     <?php else: ?>
                         <li class="logincadastro"><a href="cadastro.php">Cadastro</a></li>
                         <li class="logincadastro"><a href="login.php">Login</a></li>
@@ -41,7 +46,7 @@
                     </li>
                 </ul>
             </nav>
-            <div class="menu-icon" onclick="menutoggle()">
+            <div class="menu-icon">
                 <div class="bar1"></div>
                 <div class="bar2"></div>
                 <div class="bar3"></div>
@@ -49,153 +54,13 @@
         </div>
     </div>
 
-    <div class="cart-sidebar" id="cartSidebar">
-        <button class="close-btn" onclick="toggleCart()">&times;</button>
-        <h2>Carrinho de Compras</h2>
-        <div id="cartItems"></div>
-        <button class="btn" onclick="checkout()">Finalizar Compra</button>
-    </div>
-
-    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
-
-    </div>
-    </header>
-
     <div class="small-container">
         <div class="row row-2">
             <h2>Todos os Produtos</h2>
         </div>
 
-        <!--Primeira fileira-->
-        <div class="row">
-            <div class="col-4">
-                <img src="../img/hand_grip.png" alt="handgrip"><a></a>
-                <h4>Hand Grip Regulável Hidrolight</h4><a></a>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$20.00</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-
-            </div>
-            <div class="col-4">
-                <img src="../img/peso.png" alt="peso"><a></a>
-                <h4>Kettlebell Emborrachado 26kg - Peso Academia Exercit Esportes </h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>R$439,40</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-
-            <div class="col-4">
-                <img src="../img/halter.webp" alt="halter"><a></a>
-                <h4>Dumbbell Halter de Ferro 1kg</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>$15.00</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-        </div>
-
-        <!--Segunda fileira-->
-        <div class="row">
-            <div class="col-4">
-                <img src="../img/halteres.webp" alt="halteres"><a></a>
-                <h4>2 Halteres Rosca + 24kg D Anilhas Sport 31mm - Peso Academia</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$830.00</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-            <div class="col-4">
-                <img src="../img/halter1.webp" alt="halter1"><a></a>
-                <h4>Kit Halteres De Anilhas E Barras Fitness - 18 Peças</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>R$193.45</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-            <div class="col-4">
-                <img src="../img/anilha.jpg" alt="anilha"><a></a>
-                <h4>POLIMET Anilha de Ferro Pintada, Unissex Adulto</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$32.19</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-        </div>
-
-        <!--Terceira fileira-->
-        <div class="row">
-            <div class="col-4">
-                <img src="../img/cinturao.jpg" alt="cinturao"><a></a>
-                <h4>Cinturão de Musculação Muvin – Tamanho Ajustável</h4>
-                <div class="rating">
-
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$79.90</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-            <div class="col-4">
-                <img src="../img/caneleira.jpg" alt="caneleira"><a></a>
-                <h4>Par Caneleira Tornozeleira de Peso Punch </h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>R$21.78</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-            <div class="col-4">
-                <img src="../img/bola.jpg" alt="bola"><a></a>
-                <h4>Bola Suiça Premium para Pilates</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$49.90</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
+        <div class="row" id="product-list">
+            <!-- Produtos serão renderizados aqui -->
         </div>
 
         <div class="page-btn">
@@ -203,9 +68,9 @@
             <span>2</span>
             <span>&#8594;</span>
         </div>
-
     </div>
 
+    <!-- Carrinho Sidebar e Overlay -->
     <div class="overlay" id="overlay" onclick="toggleCart()"></div>
 
     <div id="cartSidebar" class="cart-sidebar">
@@ -217,16 +82,60 @@
         <button onclick="checkout()">Finalizar Compra</button>
     </div>
 
-    <script type="text/javascript">
-        var isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>;
-        console.log("isLoggedIn:", isLoggedIn);
-    </script>
-        });
+    <!-- footer -->
+    <div class="footer">
+        <div class="container">
+            <hr>
+            <p class="copyright">Copyright 2024 - SupraPrime</p>
+        </div>
+    </div>
 
     <script src="../JS/script.js"></script>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            verificarAutenticacao(); // Atualiza os botões do menu
+            atualizarCarrinho(); // Atualiza o carrinho ao carregar a página
 
-</html>
+            // Buscar e renderizar produtos
+            fetch('../backend/api/getAllProducts.php?start_id=16&end_id=25')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const productList = document.getElementById('product-list');
+                        data.produtos.forEach(produto => {
+                            const productDiv = document.createElement('div');
+                            productDiv.className = 'col-4';
+                            productDiv.innerHTML = `
+                                <img src="../${produto.imagem}" alt="${produto.nome}">
+                                <h4>${produto.nome}</h4>
+                                <div class="rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                                <p>${produto.preco > 0 ? `R$${produto.preco}` : 'Indisponível'}</p>
+                                ${produto.id > 0 ? `<button class="btn add-to-cart" data-product-id="${produto.id}">Adicionar ao Carrinho</button>` : ''}
+                            `;
+                            productList.appendChild(productDiv);
+                        });
+
+                        // Adicionar event listeners aos botões de adicionar ao carrinho
+                        document.querySelectorAll('.add-to-cart').forEach(button => {
+                            button.addEventListener('click', function () {
+                                const productId = this.getAttribute('data-product-id');
+                                adicionarAoCarrinho(productId);
+                            });
+                        });
+                    } else {
+                        console.error('Erro ao carregar produtos:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar produtos:', error);
+                });
+        });
     </script>
 </body>
 

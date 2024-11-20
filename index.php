@@ -1,3 +1,21 @@
+<?php
+session_start();
+include('backend/api/config.php'); // Inclua o arquivo de configuração para a conexão com o banco de dados
+
+// Função para buscar produtos em promoção (ajuste conforme necessário)
+function getPromotionalProducts($conn) {
+    $stmt = $conn->prepare("SELECT * FROM produtos LIMIT 6"); // Ajuste a consulta conforme necessário
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $produtos = [];
+    while ($row = $result->fetch_assoc()) {
+        $produtos[] = $row;
+    }
+    return $produtos;
+}
+
+$produtosPromocao = getPromotionalProducts($conn);
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -20,13 +38,10 @@
 </head>
 
 <body>
-    <?php
-    session_start();
-    ?>
     <script type="text/javascript">
         var isLoggedIn = <?php echo json_encode(isset($_SESSION['user_id'])); ?>;
         console.log("isLoggedIn:", isLoggedIn);
-    </script>
+    </script> <!-- Fechar a tag <script> corretamente -->
     <div class="header">
         <div class="navbar">
             <div class="logo">
@@ -37,25 +52,23 @@
                     <li><a href="index.php">Home</a></li>
                     <li><a href="view/produtos.php">Produtos</a></li>
                     <li><a href="view/sobre.php">Sobre</a></li>
-                    <li id="profileLink" style="display: none;">
-                        <a href="view/dashboard.php">
-                            <img src="img/profile.png" alt="Perfil" width="30">
-                        </a>
-                    </li>
-                    <li id="logoutLink" style="display: none;">
-                        <a href="backend/api/logout.php">Sair</a>
-                    </li>
-                    <li id="cadastroLink" class="logincadastro"><a href="view/cadastro.php">Cadastro</a></li>
-                    <li id="loginLink" class="logincadastro"><a href="view/login.php">Login</a></li>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <li><a href="view/dashboard.php"><img src="img/profile.png" alt="Perfil" width="30"></a></li>
+                        <li><a href="backend/api/logout.php">Sair</a></li>
+                    <?php else: ?>
+                        <li class="logincadastro"><a href="view/cadastro.php">Cadastro</a></li>
+                        <li class="logincadastro"><a href="view/login.php">Login</a></li>
+                    <?php endif; ?>
                     <!-- Botão de Carrinho -->
                     <li>
                         <a href="#" onclick="toggleCart()">
                             <i class="fa fa-shopping-cart"></i>
+                            <span id="cart-count">0</span>
                         </a>
                     </li>
                 </ul>
             </nav>
-            <div class="menu-icon" onclick="menutoggle()">
+            <div class="menu-icon">
                 <div class="bar1"></div>
                 <div class="bar2"></div>
                 <div class="bar3"></div>
@@ -72,9 +85,10 @@
             <div id="cartItems">
                 <!-- Itens do carrinho serão renderizados aqui -->
             </div>
-            <button onclick="checkout()">Finalizar Compra</button>
+            <div class="cart-buttons">
+                <button class="btn btn-finalizar" onclick="checkout()">Finalizar Compra</button>
+            </div>
         </div>
-
 
         <div class="row">
             <div class="col-2">
@@ -85,7 +99,7 @@
 
             <!-- Hide this div below 768px -->
             <div class="col-7">
-                <img src="img/banner_principal.png" alt="kit-suplementos">
+                <img src="img/banner_principal.jpg" alt="kit-suplementos">
             </div>
         </div>
     </div>
@@ -168,164 +182,30 @@
         </div>
     </section>
 
-
-    <!--<div class="categories">
-            <div class="small-container">
-                <div class="row">
-                <div class="col-3">
-                    <img src="img/coqueteleira.webp" alt="coqueteleira">
-                </div>
-                <div class="col-3">
-                    <img src="img/creatina2.png" alt="creatina">
-                </div>
-                <div class="col-3">
-                    <img src="img/whey.jpg" alt="whey">
-                </div>
-            </div>
-            </div>
-        </div>-->
-
-    <!-- Produtos em destaque -->
-
+    <!-- Produtos -->
+    <h2 class="title">Produtos em promoção</h2>
     <div class="small-container">
-        <h2 class="title">Produtos em promoção</h2>
         <div class="row">
-            <div class="col-4">
-                <img src="img/whey.jpg" alt="whey">
-                <h4>Bcaa + Creatina</h4>
-                <div class="rating">
-                    <!--avaliação-->
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
+            <?php foreach ($produtosPromocao as $produto): ?>
+                <div class="col-4">
+                    <img src="<?php echo $produto['imagem']; ?>" alt="<?php echo $produto['nome']; ?>">
+                    <h4><?php echo $produto['nome']; ?></h4>
+                    <div class="rating">
+                        <!--avaliação-->
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-half-o"></i>
+                        <i class="fa fa-star-o"></i>
+                    </div>
+                    <p>R$<?php echo number_format($produto['preco'], 2, ',', '.'); ?></p>
+                    <button class="btn add-to-cart" data-product-id="<?php echo $produto['id']; ?>">Adicionar ao Carrinho</button>
                 </div>
-                <p>R$150.00</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-            <div class="col-4">
-                <img src="img/wheyp.png" alt="wheyp">
-                <h4>Whey</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>R$150.00</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-            <div class="col-4">
-                <img src="img/pre-treino.png" alt="pre-treino">
-                <h4>Pré-Treino Diabo Verde</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$100.00</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-        </div>
-
-
-        <h2 class="title">Produtos mais recentes</h2>
-        <div class="row">
-            <div class="col-4">
-                <img src="img/whey1.png" alt="whey1">
-                <h4>Whey</h4>
-                <div class="rating">
-
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$80.00</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-
-            <div class="col-4">
-                <img src="img/isolate.png" alt="isolate">
-                <h4>Isolate</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>R$120.00</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-
-            <div class="col-4">
-                <img src="img/creatina2.png" alt="creatina">
-                <h4>Creatina</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$80.00</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-4">
-                <img src="img/CREATINA.png" alt="creatina">
-                <h4>Creatina</h4>
-                <div class="rating">
-
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$75.00</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-            <div class="col-4">
-                <img src="img/Max-TitaniumBaunilha.png" alt="Max-TitaniumBaunilha">
-                <h4>Whey + Bcaa + Creatina</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
-                </div>
-                <p>R$180.00</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
-            <div class="col-4">
-                <img src="img/protein.jpg" alt="protein">
-                <h4>Whey</h4>
-                <div class="rating">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                </div>
-                <p>R$130.00</p>
-                <button class="btn add-to-cart" data-product-id="1">Adicionar ao Carrinho</button>
-            </div>
+            <?php endforeach; ?>
         </div>
     </div>
 
     <!-- offerta -->
-
     <div class="offer">
         <div class="small-container">
             <div class="row">
@@ -361,7 +241,6 @@
     </div>
 
     <!-- Depoimento -->
-
     <h2 class="title">Depoimentos de Clientes</h2>
     <div class="testimonial">
         <div class="small-container">
@@ -428,19 +307,13 @@
         </div>
     </div>
 
-    <!-- Script -->
+    <!-- Campo de script.js antes de fechar o body -->
     <script src="JS/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             verificarAutenticacao(); // Chama a função correta para atualizar os botões do menu
+            atualizarCarrinho(); // Atualiza o carrinho ao carregar a página
         });
     </script>
-    <!-- Script -->
-
 </body>
-
-</html>
-
-</body>
-
 </html>
