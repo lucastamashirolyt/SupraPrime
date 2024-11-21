@@ -6,9 +6,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
     exit();
 }
 
-
 include('../../backend/api/config.php');
-
 
 // Buscar registros de clientes
 $result = $conn->query("SELECT rc.id, u.nome AS cliente, p.nome AS produto, rc.quantidade, rc.data_compra 

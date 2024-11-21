@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('backend/api/config.php'); // Inclua o arquivo de configuração para a conexão com o banco de dados
+include('../backend/api/config.php'); // Inclua o arquivo de configuração para a conexão com o banco de dados
 
 // Função para buscar produtos em promoção (ajuste conforme necessário)
 function getPromotionalProducts($conn) {
@@ -54,7 +54,7 @@ $produtosPromocao = getPromotionalProducts($conn);
                     <li><a href="view/sobre.php">Sobre</a></li>
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <li><a href="view/dashboard.php"><img src="img/profile.png" alt="Perfil" width="30"></a></li>
-                        <li><a href="backend/api/logout.php">Sair</a></li>
+                        <li><a href="../backend/api/logout.php">Sair</a></li>
                     <?php else: ?>
                         <li class="logincadastro"><a href="view/cadastro.php">Cadastro</a></li>
                         <li class="logincadastro"><a href="view/login.php">Login</a></li>

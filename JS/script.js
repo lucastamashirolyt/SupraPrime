@@ -243,7 +243,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-
             fetch('../../backend/api/loginAPI.php', {
                 method: 'POST',
                 headers: {
