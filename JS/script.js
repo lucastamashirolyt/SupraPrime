@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function adicionarAoCarrinho(id) {
     // Verificar se estamos na página index.php ou em uma subpágina
     const pathPrefix = window.location.pathname.includes('/view/') ? '../' : '';
-    fetch(`${pathPrefix}backend/api/getProductsById.php?id=${id}`) // Corrigir o caminho
+    fetch(`${pathPrefix}../backend/api/getProductsById.php?id=${id}`) // Corrigir o caminho
         .then(response => response.text())
         .then(text => {
             try {
@@ -210,7 +210,7 @@ function checkout() {
     }
 
     // Registrar a compra no backend
-    fetch('backend/api/registerPurchase.php', {
+    fetch('../../backend/api/registerPurchase.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -243,7 +243,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            fetch('../backend/api/loginAPI.php', {
+
+            fetch('../../backend/api/loginAPI.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -281,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 data[key] = value;
             });
 
-            fetch('../backend/api/register.php', {
+            fetch('../../backend/api/register.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -309,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Função para atualizar a lista de produtos (Admin)
 function atualizarListaProdutos() {
-    fetch('../backend/api/getProducts.php')
+    fetch('../../backend/api/getProducts.php')
         .then(response => response.json())
         .then(data => {
             console.log('Resposta do servidor:', data); // Log para depuração
@@ -510,7 +511,7 @@ if (editUserForm) {
 
         const dados = { id, nome: name, email, role };
 
-        fetch('../backend/api/editUser.php', {
+        fetch('../../backend/api/editUser.php', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -586,7 +587,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function editarUsuario(id) {
     // Obter os dados atuais do usuário
-    fetch(`../backend/api/getUserById.php?id=${id}`) // Corrected path
+    fetch(`../../backend/api/getUserById.php?id=${id}`) // Corrected path
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -611,22 +612,39 @@ function editarUsuario(id) {
 
 // Função para excluir usuário
 function excluirUsuario(id) {
+    console.log(`Tentando excluir usuário com ID: ${id}`);
     if (confirm('Tem certeza que deseja excluir este usuário?')) {
-        fetch(`../backend/api/delete_user.php?id=${id}`, {
-            method: 'GET'
+        fetch(`../../backend/api/delete_user.php`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `id=${id}`
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                mostrarAlerta(data.message, 'success');
-                location.reload();
-            } else {
-                mostrarAlerta(data.message, 'danger');
+        .then(response => {
+            console.log('Resposta do servidor:', response);
+            return response.text(); // Alterado para text() para depuração
+        })
+        .then(text => {
+            console.log('Texto recebido do servidor:', text);
+            try {
+                const data = JSON.parse(text);
+                console.log('Dados recebidos do servidor:', data);
+                if (data.success) {
+                    alert('Usuário excluído com sucesso.');
+                    location.reload();
+                } else {
+                    alert('Erro ao excluir usuário.');
+                }
+            } catch (error) {
+                console.error('Erro ao analisar JSON:', error);
+                console.error('Resposta do servidor:', text);
+                alert('Erro ao excluir usuário.');
             }
         })
         .catch(error => {
             console.error('Erro:', error);
-            mostrarAlerta('Erro ao excluir usuário.', 'danger');
+            alert('Erro ao excluir usuário.');
         });
     }
 }

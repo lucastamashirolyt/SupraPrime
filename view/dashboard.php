@@ -28,7 +28,7 @@ $isAdmin = $_SESSION['user_role'] === 'admin';
             <a href="user_management.php">Gerenciar Usuários</a>
             <a href="registro_clientes.php">Histórico de Compras</a>
         <?php endif; ?>
-        <a href="../backend/api/logout.php">Sair</a>
+        <a href="../../backend/api/logout.php">Sair</a>
         <?php if (!$isAdmin): ?>
             <a href="../index.php">Página Inicial</a>
         <?php endif; ?>

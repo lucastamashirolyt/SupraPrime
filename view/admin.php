@@ -37,7 +37,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
     <div class="admin-container">
         <div class="top-right">
             <a href="../view/dashboard.php" class="btn btn-info">Voltar</a>
-            <a href="../backend/api/logout.php" class="btn btn-danger">Sair</a>
+            <a href="../../backend/api/logout.php" class="btn btn-danger">Sair</a>
         </div>
         <h1>Gerenciar Produtos</h1>
         <form id="formProduto">
@@ -91,7 +91,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
 
             if (editMode) {
                 produto.id = id;
-                fetch(`../backend/api/updateProduct.php`, {
+                fetch(`../../backend/api/updateProduct.php`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -124,7 +124,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
                     alerta.textContent = 'Erro ao atualizar o produto.';
                 });
             } else {
-                fetch('../backend/api/createProduct.php', {
+                fetch('../../backend/api/createProduct.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -149,7 +149,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
         });
 
         function atualizarListaProdutos() {
-            fetch('../backend/api/getProducts.php')
+            fetch('../../backend/api/getProducts.php')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -199,7 +199,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
 
         function removerProduto(id) {
             if (confirm('Tem certeza que deseja deletar este produto?')) {
-                fetch(`../backend/api/deleteProduct.php?id=${id}`, {
+                fetch(`../../backend/api/deleteProduct.php?id=${id}`, {
                     method: 'DELETE'
                 })
                 .then(response => response.json())

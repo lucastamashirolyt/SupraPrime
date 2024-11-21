@@ -97,7 +97,7 @@ session_start();
             atualizarCarrinho(); // Atualiza o carrinho ao carregar a página
 
             // Buscar e renderizar produtos
-            fetch('../backend/api/getAllProducts.php?start_id=16&end_id=25')
+            fetch('../../backend/api/getAllProducts.php?start_id=16&end_id=25')
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
