@@ -74,21 +74,28 @@ session_start();
                 <div class="member_img">
                     <img src="../img/foto.png" alt="our_team">
                 </div>
-                <h3>Lucas Yuji Tamashiro</h3>
-                <p><b>RA:202208700561</b></p>
+                <h3>Gabriel Rocha</h3>
+                <p><b>RA:202302704328</b></p>
             </div>
             <div class="team_member">
                 <div class="member_img">
                     <img src="../img/foto.png" alt="our_team">
                 </div>
-                <h3>Gabriel de Sousa Silveira</h3>
+                <h3>Gabriel Silveira</h3>
                 <p><b>RA:202302381911</b></p>
             </div>
+                <div class="team_member">
+                <div class="member_img">
+                    <img src="../img/foto.png" alt="our_team">
+                </div>
+                <h3>Caio Tawfiq</h3>
+                <p><b>RA:202408292007</b></p>
+            </div>
             <div class="team_member">
                 <div class="member_img">
                     <img src="../img/foto.png" alt="our_team">
                 </div>
-                <h3>Gustavo Pascoal Novais Batista</h3>
+                <h3>Gustavo Pascoal</h3>
                 <p><b>RA:202302380931</b></p>
             </div>
         </div>

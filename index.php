@@ -90,16 +90,24 @@ $produtosPromocao = getPromotionalProducts($conn);
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-2">
-                <h1>Quer deixar de ser um frango?<br>venha para <div style="color: #ff523b;">SupraPrime</div></h1>
-                <p>Venha e conheça a melhor loja de Suplementos de Campinas e região</p>
-                <a href="./view/produtos.php" class="btn">Compre Agora &#8594;</a>
-            </div>
+ <div class="row" style="min-height: 300px; display: flex; justify-content: center; align-items: center;">
+  <div class="col-2">
+    <div style="padding: 10px; display: flex; justify-content: space-evenly; align-items: center; flex-direction: column; text-align: center; height: 100%;">
+      <h1 style="font-size: 2rem; font-weight: 600;">
+        Quer deixar de ser um frango? <br>venha para <span style="color: #ff523b;">SupraPrime</span>
+      </h1>
+      <p style="font-size: 1rem; color: #555; max-width: 400px;">
+        Venha e conheça a melhor loja de Suplementos de Campinas e região
+      </p>
+      <a href="./view/produtos.php" class="btn" style="padding: 0.6rem 1.2rem; font-size: 1rem;">
+        Compre Agora →
+      </a>
+    </div>
+  </div>
+</div>
 
             <!-- Hide this div below 768px -->
             <div class="col-7">
-                <img src="img/banner_principal.jpg" alt="kit-suplementos">
             </div>
         </div>
     </div>
